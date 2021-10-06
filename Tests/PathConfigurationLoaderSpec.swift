@@ -2,12 +2,14 @@ import XCTest
 import Quick
 import Nimble
 import OHHTTPStubs
+import OHHTTPStubsSwift
 @testable import Turbo
 
 class PathConfigurationLoaderSpec: QuickSpec {
     override func spec() {
         let serverURL = URL(string: "http://turbo.test/configuration.json")!
-        let fileURL = Bundle(for: type(of: self)).url(forResource: "test-configuration", withExtension: "json")!
+        
+        let fileURL = Bundle.module.url(forResource: "test-configuration", withExtension: "json")!
         
         describe("load") {
             context("data") {

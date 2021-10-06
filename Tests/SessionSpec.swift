@@ -177,17 +177,16 @@ class SessionSpec: QuickSpec {
     }
     
     private func startServer() {
-        let bundle = Bundle(for: SessionSpec.self)
-        let resources = bundle.resourcePath!
+        let bundle = Bundle.module
+        let resources = bundle.bundlePath + "/Server"
         
         server.addGETHandler(forBasePath: "/", directoryPath: resources, indexFilename: "turbo.html", cacheAge: 0, allowRangeRequests: true)
-
         server.addHandler(forMethod: "GET", path: "/turbolinks", request: GCDWebServerRequest.self) { _ in
-            GCDWebServerDataResponse(data: try! Data(contentsOf: bundle.url(forResource: "turbolinks", withExtension: "html")!), contentType: "text/html")
+            GCDWebServerDataResponse(data: try! Data(contentsOf: bundle.url(forResource: "turbolinks", withExtension: "html", subdirectory: "Server")!), contentType: "text/html")
         }
         
         server.addHandler(forMethod: "GET", path: "/turbolinks-5.3", request: GCDWebServerRequest.self) { _ in
-            GCDWebServerDataResponse(data: try! Data(contentsOf: bundle.url(forResource: "turbolinks-5.3", withExtension: "html")!), contentType: "text/html")
+            GCDWebServerDataResponse(data: try! Data(contentsOf: bundle.url(forResource: "turbolinks-5.3", withExtension: "html", subdirectory: "Server")!), contentType: "text/html")
         }
         
         server.addHandler(forMethod: "GET", path: "/missing-library", request: GCDWebServerRequest.self) { _ in

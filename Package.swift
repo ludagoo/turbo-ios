@@ -12,15 +12,34 @@ let package = Package(
             name: "Turbo",
             targets: ["Turbo"]),
     ],
-    dependencies: [],
+    dependencies: [
+        .package(url: "https://github.com/Quick/Quick.git", from: "4.0.0"),
+        .package(url: "https://github.com/Quick/Nimble.git", from: "9.0.0"),
+        .package(url: "https://github.com/AliSoftware/OHHTTPStubs.git", from: "9.0.0"),
+        .package(url: "https://github.com/nostradani/GCDWebServer.git", .branch("master")), //basecamp/GCDWebServer looks like a broken WIP
+    ],
     targets: [
         .target(
             name: "Turbo",
             dependencies: [],
             path: "Source",
-            exclude: ["Info.plist"],
+            exclude: [],
             resources: [
                 .copy("WebView/turbo.js")
+            ]),
+        .testTarget(
+            name: "Tests",
+            dependencies: [
+                "Turbo",
+                "Quick",
+                "Nimble",
+                .product(name: "OHHTTPStubsSwift", package: "OHHTTPStubs"),
+                .product(name: "GCDWebServers", package: "GCDWebServer")],
+            path: "Tests",
+            exclude: [],
+            resources: [
+                .copy("Fixtures/test-configuration.json"),
+                .copy("Server")
             ])
     ]
 )

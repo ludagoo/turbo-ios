@@ -47,17 +47,9 @@ final class WebViewBridge {
     }
     
     private var userScript: WKUserScript {
-        let url = Self.bundle.url(forResource: "turbo", withExtension: "js")!
+        let url = Bundle.module.url(forResource: "turbo", withExtension: "js")!
         let source = try! String(contentsOf: url, encoding: .utf8)
         return WKUserScript(source: source, injectionTime: .atDocumentEnd, forMainFrameOnly: true)
-    }
-    
-    private static var bundle: Bundle {
-        #if SWIFT_PACKAGE
-        return Bundle.module
-        #else
-        return Bundle(for: WebViewBridge.self)
-        #endif
     }
     
     // MARK: - JS

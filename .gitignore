@@ -1,2 +1,5 @@
 xcuserdata
 Carthage
+.swiftpm
+swiftpm
+Package.resolved
